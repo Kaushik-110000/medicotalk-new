@@ -54,13 +54,13 @@ function Landing() {
                 onClick={() => navigate('/register')}
                 className="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400"
               >
-                Register New Patient
+                Register Yourself
               </GlassButton>
               <GlassButton 
                 onClick={() => navigate('/login')}
                 className="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400"
               >
-                Diagnose a Patient
+                Diagnose Yourself
               </GlassButton>
             </div>
           </div>

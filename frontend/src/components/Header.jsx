@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -55,7 +56,7 @@ function Header() {
           whileHover={{ scale: 1.1 }}
         />
         <motion.span
-          className="text-2xl font-extrabold text-white tracking-wide bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent"
+          className="text-2xl font-extrabold tracking-wide bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent"
           whileHover={{ scale: 1.05 }}
         >
           MedicoTalk
