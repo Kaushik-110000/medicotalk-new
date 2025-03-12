@@ -36,7 +36,7 @@ function Landing() {
               transition={{ duration: 1 }}
               className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent"
             >
-              MedicoChat<br/> 
+              MedicoTalk<br/> 
               <span className="text-white">Welcomes You</span>
             </motion.h1>
             
