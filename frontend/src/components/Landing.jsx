@@ -20,7 +20,7 @@ function Landing() {
   const y2 = useTransform(scrollY, [0, 500], [0, -80]);
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white overflow-hidden">
+    <div className="relative min-h-screen min-w-screen bg-slate-900 text-white overflow-x-hidden">
       {/* Floating Background Elements */}
       <motion.div style={{ y: y1 }} className="absolute top-20 -left-32 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl" />
       <motion.div style={{ y: y2 }} className="absolute top-96 -right-40 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl" />
@@ -54,13 +54,13 @@ function Landing() {
                 onClick={() => navigate('/register')}
                 className="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400"
               >
-                Register New Patient
+                Register Yourself
               </GlassButton>
               <GlassButton 
                 onClick={() => navigate('/login')}
                 className="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400"
               >
-                Diagnose a Patient
+                Diagnose Yourself
               </GlassButton>
             </div>
           </div>
