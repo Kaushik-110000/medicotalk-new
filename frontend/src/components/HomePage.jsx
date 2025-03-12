@@ -1,56 +1,85 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { motion } from "framer-motion";
 
 function HomePage() {
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-blue-300 pl-6 pr-6">
-      {/* Logo Section */}
-      <h1 className="text-xl text-black">Current Patient = {userData.patientID}</h1>
-      <img src="/logo.svg" alt="MedicoTalk Logo" className="w-50 h-50" />
+    <div className="min-h-screen flex flex-col items-center justify-center bg-slate-900 text-white px-6">
+      {/* Patient ID Section */}
+      <motion.div
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1 }}
+        className="bg-slate-800/50 border border-cyan-400/30 backdrop-blur-md shadow-lg px-8 py-4 rounded-xl text-center font-semibold tracking-wide mb-8"
+      >
+        Current Patient: <span className="text-cyan-400 text-lg">{userData.patientID}</span>
+      </motion.div>
 
-      <h1 className="text-4xl font-bold text-white mb-8">Presents</h1>
+      {/* Logo & Title */}
+      <motion.h1
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="text-5xl font-extrabold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-12"
+      >
+        MedicoTalk Presents
+      </motion.h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl">
+      {/* Feature Sections */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 w-full max-w-5xl">
         {/* Diagnosis Section */}
-        <div className="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center text-center">
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 150 }}
+          className="bg-slate-800/50 p-8 rounded-2xl shadow-lg border border-slate-700/50 backdrop-blur-md text-center"
+        >
           <img
             src="/checklist-9030329_1280.png"
             alt="Diagnosis"
-            className="w-60 h-60 mb-4 rounded-md"
+            className="w-40 h-40 mb-4 mx-auto rounded-md"
           />
-          <h2 className="text-xl font-semibold text-gray-800">Get Diagnosed</h2>
-          <p className="text-gray-600 text-base mb-4">
+          <h2 className="text-2xl font-bold text-cyan-400 mb-2">Get Diagnosed</h2>
+          <p className="text-gray-400 text-base mb-4">
             Upload your medical reports and get an AI-powered diagnosis.
           </p>
-          <button
+          <motion.button
             onClick={() => navigate("/dignosis")}
-            className="bg-green-500 text-white font-semibold px-8 py-4 rounded-lg shadow-md hover:bg-green-600 transition text-lg"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400 font-semibold px-6 py-3 rounded-lg shadow-md transition-all text-lg"
           >
             Get Diagnosed
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
 
         {/* Chatbot Section */}
-        <div className="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center text-center">
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 150 }}
+          className="bg-slate-800/50 p-8 rounded-2xl shadow-lg border border-slate-700/50 backdrop-blur-md text-center"
+        >
           <img
             src="/fingers-5946228_1280.jpg"
             alt="Chatbot"
-            className="w-60 h-60 mb-4 rounded-md"
+            className="w-40 h-40 mb-4 mx-auto rounded-md"
           />
-          <h2 className="text-xl font-semibold text-gray-800">AI Chatbot</h2>
-          <p className="text-gray-600 text-base mb-4">
+          <h2 className="text-2xl font-bold text-emerald-400 mb-2">AI Chatbot</h2>
+          <p className="text-gray-400 text-base mb-4">
             Talk to our AI chatbot for instant medical assistance.
           </p>
-          <button
+          <motion.button
             onClick={() => navigate("/chatbot")}
-            className="bg-green-500 text-white font-semibold px-8 py-4 rounded-lg shadow-md hover:bg-green-600 transition text-lg"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 font-semibold px-6 py-3 rounded-lg shadow-md transition-all text-lg"
           >
             Chat with Bot
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
       </div>
     </div>
   );
