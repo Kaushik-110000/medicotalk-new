@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-
+import bcrypt from "bcrypt";
 const patientSchema = new Schema(
   {
     fullName: {
@@ -37,10 +37,25 @@ const patientSchema = new Schema(
     tokenValidity: {
       type: Date,
     },
+    password: {
+      type: String,
+    },
   },
   {
     timestamps: true, // Auto-generates createdAt and updatedAt fields
   }
 );
+
+patientSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
+});
+
+patientSchema.methods.isPasswordCorrect = async function (password) {
+  console.log(password, this.password);
+  return await bcrypt.compare(password, this.password);
+};
 
 export const Patient = mongoose.model("Patient", patientSchema);

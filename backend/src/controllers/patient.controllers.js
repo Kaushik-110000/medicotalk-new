@@ -7,14 +7,19 @@ import mongoose from "mongoose";
 import ms from "ms";
 
 const registerPatient = asyncHandler(async (req, res) => {
-  const { fullName, age, weight, height, gender } = req.body;
+  const { fullName, age, weight, height, gender, password } = req.body;
 
-  if (![fullName, age, weight, height, gender].every((field) => field)) {
+  if (
+    ![fullName, age, weight, height, gender, password].every((field) => field)
+  ) {
     throw new ApiError(400, "All fields are required");
   }
 
   const patientCount = await Patient.countDocuments();
-  const patientID = `PAT-${patientCount + 1}`; // Example format: PAT-1, PAT-2, ...
+  const flag = Math.floor(Math.random() * 10);
+  console.log(flag);
+  const firstName = fullName.split(" ")[0];
+  const patientID = `PAT-${firstName}${patientCount + 1}${flag}`;
 
   const newPatient = new Patient({
     fullName,
@@ -23,6 +28,7 @@ const registerPatient = asyncHandler(async (req, res) => {
     height,
     gender,
     patientID,
+    password,
   });
 
   await newPatient.save();
@@ -33,7 +39,7 @@ const registerPatient = asyncHandler(async (req, res) => {
 });
 
 const loginPatient = asyncHandler(async (req, res) => {
-  const { patientID } = req.body;
+  const { patientID, password } = req.body;
 
   if (!patientID) {
     throw new ApiError(400, "Patient ID is required");
@@ -44,6 +50,11 @@ const loginPatient = asyncHandler(async (req, res) => {
 
   if (!patient) {
     throw new ApiError(404, "Invalid patient ID");
+  }
+
+  const passCheck = await patient.isPasswordCorrect(password);
+  if (!passCheck) {
+    throw new ApiError(401, "Invalid credentials");
   }
 
   // Generate JWT Token
@@ -57,8 +68,12 @@ const loginPatient = asyncHandler(async (req, res) => {
   // Save Token to Database
   patient.token = token;
   patient.tokenValidity = expiryTime;
-  await patient.save();
+  await patient.save({ validateBeforeSave: false });
 
+  const loggedInpatient = await Patient.findOne({ patientID }).select(
+    "-password"
+  );
+  
   // Set Cookie Options
   const options = {
     httpOnly: true,
@@ -72,7 +87,7 @@ const loginPatient = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, patient, "Login successful"));
+    .json(new ApiResponse(200, loggedInpatient, "Login successful"));
 });
 
 const getPatient = asyncHandler(async (req, res) => {
